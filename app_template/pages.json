@@ -1,0 +1,68 @@
+{
+	"pages": [
+		{
+		"path": "pages/index/index",
+		"name": "Index",
+		"style": {
+			"navigationBarTitleText": "index"
+			}
+		},
+		{
+		"path": "pages/home/home",
+		"name": "Home",
+		"style": {
+			"navigationBarTitleText": "home"
+			}
+		},
+		{
+		"path": "pages/chat/chat",
+		"name": "Chat",
+		"style": {
+			"navigationBarTitleText": "chat"
+			}
+		},
+		{
+		"path": "pages/camera/camera",
+		"name": "Camera",
+		"style": {
+			"navigationBarTitleText": "camera"
+			}
+		},
+		{
+		"path": "pages/user/user",
+		"name": "User",
+		"style": {
+			"navigationBarTitleText": "user"
+			}
+		},
+		{
+		"path": "pages/index/login",
+		"style": {
+			"navigationBarTitleText": "Login"
+			}
+		},
+		
+		{
+		"path":"pages/error/404",
+		"name":"404",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "404",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"background": "#efeff4"
+		}
+	},
+	"easycom": {
+		"^com-(.*)": "@/components/$1/$1.vue",
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	}
+}
