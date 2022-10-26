@@ -7,8 +7,12 @@ Vue.use(uView);
 import App from './App'
 import {router,RouterMount} from 'route/index.js'
 import request from './utils/luchRequest.js'
+import tools from './utils/tools.js'
+
 Vue.config.productionTip = false
 Vue.prototype.$request = request
+Vue.prototype.$tools = tools
+
 App.mpType = 'app'
 Vue.use(router)
 const app = new Vue({

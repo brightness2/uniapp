@@ -1,10 +1,10 @@
 {
 	"pages": [
 		{
-		"path": "pages/index/index",
-		"name": "Index",
+		"path": "pages/user/login",
+		"name":"Login",
 		"style": {
-			"navigationBarTitleText": "index"
+			"navigationBarTitleText": "Login"
 			}
 		},
 		{
@@ -15,12 +15,19 @@
 			}
 		},
 		{
-		"path": "pages/chat/chat",
-		"name": "Chat",
+		"path": "components/signaBoard/demo",
+		"name": "Board",
 		"style": {
-			"navigationBarTitleText": "chat"
+			"navigationBarTitleText": "Board"
 			}
 		},
+		// {
+		// "path": "pages/chat/chat",
+		// "name": "Chat",
+		// "style": {
+		// 	"navigationBarTitleText": "chat"
+		// 	}
+		// },
 		{
 		"path": "pages/camera/camera",
 		"name": "Camera",
@@ -35,12 +42,7 @@
 			"navigationBarTitleText": "user"
 			}
 		},
-		{
-		"path": "pages/index/login",
-		"style": {
-			"navigationBarTitleText": "Login"
-			}
-		},
+		
 		
 		{
 		"path":"pages/error/404",
@@ -51,7 +53,17 @@
 				"enablePullDownRefresh": false
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/dashboard/analysis",
+			"name":"Analysis",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "分析页",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
@@ -65,4 +77,17 @@
 		"^com-(.*)": "@/components/$1/$1.vue",
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	}
+	// ,"tabBar":{
+	// 	"list":[
+	// 		{
+	// 			"pagePath": "pages/home/home",
+	// 			"text": "Home"
+	// 		},
+	// 		{
+	// 			"pagePath": "pages/user/user",
+	// 			"text": "User"
+	// 		}
+	// 	]
+	// }
+	
 }
