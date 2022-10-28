@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-empty mode="page" icon="http://cdn.uviewui.com/uview/empty/page.png"></u-empty>
+		<u-empty mode="permission" icon="http://cdn.uviewui.com/uview/empty/permission.png"></u-empty>
 	</view>
 </template>
 

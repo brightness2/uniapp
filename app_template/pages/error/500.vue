@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-empty mode="page" icon="http://cdn.uviewui.com/uview/empty/page.png"></u-empty>
+		<h1>500 服务器出错</h1>
 	</view>
 </template>
 

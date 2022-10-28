@@ -6,6 +6,10 @@ const userApi = {
 			password,
 		});
 		return res;
+	},
+	async getList(){
+		let res = await request.get('test/getUserList');
+		return res;
 	}
 }
 

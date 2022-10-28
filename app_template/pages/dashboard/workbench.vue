@@ -5,7 +5,7 @@
 				<u--image width="80" height="80" src="http://quasar.admin.sikacode.com/imgs/head_1.png" shape="circle"></u--image>
 			</view>
 			<view class="name uni-pb-4">
-				<u--text text="早安，Serati Ma，祝你开心每一天!" size="18"></u--text>
+				<u--text text="早安，Brightness，祝你开心每一天!" size="18"></u--text>
 				<u--text text="交互设计 |昊朗－某某某事业群－某某平台部－某某技术部－UED" size="12" type="info"></u--text>
 			</view>
 			<u-row >

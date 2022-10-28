@@ -62,15 +62,38 @@
 						]
 					},
 					{
-						icon:'edit-pen',
-						title:'签名板',
-						name:'Board'
+						title:'列表页',
+						children:[
+							{
+								icon:'list',
+								title:'用户列表',
+								name:'Userlist',
+							},
+							{
+								icon:'list',
+								title:'商品列表',
+								name:'Goodslist',
+							},
+							
+						]
 					},
 					{
-						icon:'camera',
-						title:'相册',
-						name:'Camera'
+						title:'扩展页',
+						children:[
+							
+							{
+								icon:'edit-pen',
+								title:'签名板',
+								name:'Board'
+							},
+							{
+								icon:'camera',
+								title:'相册',
+								name:'Camera'
+							},
+						]
 					},
+					
 				]
 			}
 		},
