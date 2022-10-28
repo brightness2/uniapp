@@ -36,6 +36,28 @@
 								title:'分析页',
 								name:'Analysis',
 							},
+							{
+								icon:'grid',
+								title:'工作台',
+								name:'Workbench',
+							},
+							
+						]
+					},
+					{
+						title:'表单页',
+						children:[
+							{
+								icon:'order',
+								title:'基础表单',
+								name:'BasicForm',
+							},
+							{
+								icon:'order',
+								title:'步骤表单',
+								name:'StepForm',
+							},
+							
 							
 						]
 					},
@@ -54,7 +76,6 @@
 		},
 		methods:{
 			tap(item){
-				console.log(item);
 				this.$Router.push({name:item.name})
 			}
 		}

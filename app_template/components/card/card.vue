@@ -3,17 +3,17 @@
 		<view class="title uni-pa-8">
 			<u-row type="flex" justify="space-between">
 				<u-col span="1" v-if="leftIcon"><u-icon  :name="leftIcon" :color="leftIconColor" :size="leftIconSize"></u-icon></u-col>
-				<u-col span="10" v-if="title"><u--text :text="title" :size="titleSize" :color="titleColor"></u--text></u-col>
+				<u-col justify="flex-start" span="9" v-if="title"><u--text :text="title" :size="titleSize" :color="titleColor"></u--text></u-col>
 				<u-col span="1" v-if="rightIcon">
 					<u-icon  :name="rightIcon" :color="rightIconColor" :size="rightIconSize"></u-icon>
 				</u-col>
 				<slot name="title"></slot>
 			</u-row>
 		</view>
-		<view class="body uni-pa-8">
+		<view v-if="$slots.body" class="body uni-pa-8">
 			<slot name="body"></slot>
 		</view>
-		<view class="footer uni-pa-4">
+		<view v-if="footerLeftText||footerRightText||$slots.footer" class="footer uni-pa-4">
 			<view v-if="footerLeftText" class="left">
 				{{footerLeftText}}
 			</view>
@@ -93,13 +93,13 @@
 		margin-bottom: 20rpx;
 		.title{
 			height: 40rpx;
-			border-bottom: 1px solid $u-info-disabled;
 		}
 		
 		.body{
-			border-bottom: 1px solid $u-info-disabled;
+			border-top: 1px solid $u-info-disabled;
 		}
 		.footer{
+			border-top: 1px solid $u-info-disabled;
 			display: flex;
 			justify-content: space-between;
 		}

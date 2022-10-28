@@ -63,6 +63,36 @@
             }
             
         }
+        ,{
+            "path" : "pages/dashboard/workbench",
+			"name": "Workbench",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "工作台",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/form/basic",
+			"name": "BasicForm",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "基础表单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/form/step",
+			"name" : "StepForm",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "步骤表单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
