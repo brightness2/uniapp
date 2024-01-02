@@ -1,0 +1,68 @@
+//如果报 errCode = 100002 ，请修改 /uni_modules/ux-request/js_sdk/interceptors.uts 中的 type DataResult
+import { UxRequest, DataResult, FailInfo, SuccessInfo } from '@/uni_modules/ux-request/js_sdk/request.uts'
+import {state} from '@/store/index.uts'
+
+class HowellRequest extends UxRequest{
+
+	constructor(opts : Map<string,any>){
+		super(opts)
+	}
+	
+	
+	/**
+	 * 设置配置
+	 * @param {Map<string,any>} config
+	 */
+	setConfig(config : Map<string,any>) : void {
+		this.defaultOptions = this.merge(this.defaultOptions,config);
+	}
+	
+	changeBaseUrl(baseUrl : string) : void{
+		let cfgMap = new Map<string,any>()
+		this.setConfig(cfgMap.set('baseURL',baseUrl))
+	}
+}
+
+// 初始化时，配置参数
+let reqParams = new Map<string,any>()
+reqParams.set('header',{
+	'Content-Type': 'application/json'
+} as UTSJSONObject)
+
+// 请求实例
+let request = new HowellRequest(reqParams)
+request.interceptors.request.use((config : Map<string,any>) : Map<string,any> => {
+	config.set('baseURL',state.store_ipurl)//从store中获取 baseURL
+	console.log('请求拦截',config);
+	return config
+})
+
+request.interceptors.response.use(
+	(res : SuccessInfo) : SuccessInfo => {
+		console.log('response success:');
+		let data = res.data
+		if(data.code != 1){
+			if(data.msg != ''){
+				uni.showToast({
+					title:data.msg,
+					icon:'error',
+					duration:2000,
+				});
+			}
+			res.data.data = null
+		}
+		return res;
+	},
+	(err : FailInfo) : FailInfo => {
+		console.log('response err');
+		uni.showToast({
+			title:'请求失败' + err.errCode,
+			icon:'error',
+			
+		});
+		return err
+	},
+)
+
+
+export {request,DataResult, FailInfo, SuccessInfo};

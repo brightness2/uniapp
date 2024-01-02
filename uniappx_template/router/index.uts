@@ -1,0 +1,164 @@
+import {queryParams,page} from '@/lib/function/index.uts'
+import Interceptor,{InterceptorResult} from './interceptors.uts'
+export {InterceptorResult}
+/**
+ * 路由跳转方法，该方法相对于直接使用uni.xxx的好处是使用更加简单快捷
+ * 并且带有路由拦截功能
+ */
+export enum RouterType {
+	navigateTo='navigateTo',
+	redirectTo='redirectTo',
+	switchTab='switchTab',
+	reLaunch='reLaunch',
+	navigateBack='navigateBack'
+}
+
+
+/**
+ * 创建 defaultOptions
+ * @returns {Map<string, any>}
+ */
+function defaultConfig() : Map<string, any> {
+	const doMap = new Map<string, any>()
+	doMap.set('type', RouterType.navigateTo.value)
+	doMap.set('url', '')
+	doMap.set('delta', 1)
+	doMap.set('params', {} as UTSJSONObject)
+	doMap.set('animationType', 'pop-in')
+	doMap.set('animationDuration', 300)
+	return doMap
+}
+
+class Router{
+	// 原始属性定义
+	config:Map<string,any> = defaultConfig()
+	// {
+	// 	type: RouterConfigType.navigateTo,
+	// 	url: '',
+	// 	delta: 1, // navigateBack页面后退时,回退的层数
+	// 	params: {}, // 传递的参数
+	// 	animationType: 'pop-in', // 窗口动画,只在APP有效
+	// 	animationDuration: 300, // 窗口动画持续时间,单位毫秒,只在APP有效
+	// }
+	interceptor: Interceptor = {} as Interceptor
+	constructor(){
+		// console.log(this.config);
+	}
+	
+	// 判断url前面是否有"/"，如果没有则加上，否则无法跳转
+	protected addRootPath(url:string):string {
+	    return url.charAt(0) == '/' ? url : `/${url}`
+	}
+	
+	// 整合路由参数
+	public mixinParam(url:string, params:UTSJSONObject):string {
+	    url = this.addRootPath(url)
+	
+	    // 使用正则匹配，主要依据是判断是否有"/","?","="等，如“/page/index/index?name=mary"
+	    // 如果有url中有get参数，转换后无需带上"?"
+	    let query:string = ''
+	    if (url != '' && /.*\/.*\?.*=.*/.test(url)) {
+	        // object对象转为get类型的参数
+	        query = queryParams(params, false)
+	        // 因为已有get参数,所以后面拼接的参数需要带上"&"隔开
+	        return  `${url}&${query}`
+	    }
+	    // 直接拼接参数，因为此处url中没有后面的query参数，也就没有"?/&"之类的符号
+	    query = queryParams(params)
+	    return `${url}${query}` 
+		
+	}
+	
+	//执行路由跳转
+	protected openPage(config:Map<string,any>):void{
+		let type = config.get('type') as string;
+		let url = config.get('url') as string;
+		let delta = config.get('delta') as number;
+		let animationType = config.get('animationType') as string;
+		let animationDuration = config.get('animationDuration') as number;
+		if(type == RouterType.navigateTo.value){
+			uni.navigateTo({
+				url,
+				animationType,
+				animationDuration
+			})
+		}
+		if(type == RouterType.redirectTo.value){
+			uni.redirectTo({
+				url
+			})
+		}
+		if(type == RouterType.switchTab.value){
+			uni.switchTab({
+				url
+			})
+		}
+		if(type == RouterType.reLaunch.value){
+			uni.reLaunch({
+				url
+			})
+		}
+		if(type == RouterType.navigateBack.value){
+			uni.navigateBack({
+				delta
+			})
+		}
+	}
+	// 对外的方法名称
+	public async route(config:Map<string,any>=new Map(),params:UTSJSONObject = {}):Promise<void>{
+		// 合并用户的配置和内部的默认配置
+		config.forEach((v:any,k:string,map)=>{
+			if(this.config.has(k)){
+				this.config.set(k,v)
+			}
+		})
+		let merge_params = this.config.get('params') as UTSJSONObject
+		params.toMap().forEach((v,k,map)=>{
+			merge_params.set(k,v)
+		})
+		this.config.set('url',this.mixinParam(this.config.get('url') as string,merge_params))
+		
+		// 如果本次跳转的路径和本页面路径一致，不执行跳转，防止用户快速点击跳转按钮，造成多次跳转同一个页面的问题
+		if(this.config.get('url') == page()){
+			return
+		}
+		this.interceptor.setConfig(this.config)
+		this.interceptor.run( (result,config)=>{
+			if(result){
+				console.log('inter',config);
+				this.openPage(this.config)
+			}
+		})
+		// this.openPage(this.config)
+		// if(typeof intercept == 'function'){
+		// 	// 定一个promise，根据用户执行resolve(true)或者resolve(false)来决定是否进行路由跳转
+		// 	const isNext = await new Promise<boolean>((resolve, reject) => {
+		// 	    // !intercept(this.config, resolve)
+		// 	})
+		// }else{
+		// 	this.openPage(this.config)
+		// }
+	}
+}
+
+let router = new Router()
+
+export  {
+	router,
+}
+//用法
+// let cfg = new Map<string,any>()
+// cfg.set('url','/dfdd')
+// cfg.set('params',{o:8,a:2})
+// cfg.set('type',RouterType.redirectTo.value)
+// let a = router.route(cfg,{a:22} as UTSJSONObject)
+
+// console.log(a);
+//路由拦截
+// router.interceptor.use(function(config):InterceptorResult{
+	
+// 	return {
+// 		result:true,
+// 		config:config
+// 	} as InterceptorResult
+// })

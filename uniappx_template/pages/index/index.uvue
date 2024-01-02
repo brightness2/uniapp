@@ -1,0 +1,85 @@
+<template>
+	<view class="content">
+		<image class="logo" src="/static/logo.png"></image>
+		<view class="text-area">
+			<text class="title">{{title}}</text>
+			<text>{{store_ipurl}}</text>
+			<button @click="changeipurl">change</button>
+			<button @click="changeipurl2">change</button>
+			<button @click="loaddata">加载数据</button>
+			<button type="default" @click="doroute">路由</button>
+		</view>
+	</view>
+</template>
+
+<script>
+	import {state,setIpurl,setUser} from '@/store/index.uts'
+	import {request} from '@/request/index.uts'
+	// import {queryParams,ArrayFormat} from '@/lib/function/index.uts'
+	import {router,InterceptorResult,RouterType} from '@/router/index.uts'
+	
+	export default {
+		data() {
+			return {
+				title: 'Hello'
+			}
+		},
+		computed:{
+			store_ipurl():object{
+				return state.store_user
+			}
+		},
+		onLoad() {
+			router.interceptor.use((config:Map<string,any>): InterceptorResult=>{
+				console.log('路由拦截');
+				return {
+					result:true,
+					config:config
+				} as InterceptorResult
+			})
+			// console.log( queryParams({a:12}))
+		},
+		methods: {
+			loaddata(){
+				request.getData('/api/demo/test16',null,null).then(res=>{
+					console.log('result:');
+					console.log(res);
+				})
+			},
+			changeipurl(){
+				setIpurl('ok')
+				setUser({name:'b',age:12})
+			},
+			changeipurl2(){
+				setUser({a:2,b:55})
+			},
+			doroute(){
+				let cfg = new Map<string,any>()
+				cfg.set('url','/dfdd')
+				router.route(cfg,{
+					s:54
+				})
+			}
+		}
+	}
+</script>
+
+<style>
+	.content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.logo {
+		height: 200rpx;
+		width: 200rpx;
+		margin-top: 200rpx;
+		margin-bottom: 50rpx;
+	}
+
+	.title {
+		font-size: 36rpx;
+		color: #8f8f94;
+	}
+</style>

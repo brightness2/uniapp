@@ -1,0 +1,21 @@
+
+type Ipurl = {
+	label : string
+	value : string
+}
+
+const ipurlList : Ipurl[] = [
+	// {
+	// 	label:'production',
+	// 	value:'https://ops.hoeron.com',
+	// },
+	{
+		label:'opsDev',
+		value:'http://ops-dev.hoeron.com',
+	},
+];
+
+export {
+	ipurlList,
+	Ipurl
+}

@@ -1,0 +1,49 @@
+import {ipurlList} from '@/config/index.uts'
+type State = {
+	store_ipurl : string,
+	store_user : object
+}
+
+const state = reactive({
+	store_ipurl:ipurlList[0].value,
+	store_user:{}
+} as State)
+
+const storage_ipurl_key:string = 'store_ipurl'
+const storage_user_key:string = 'store_user'
+// 需要永久存储，且下次APP启动需要取出的，在state中的变量名
+let saveStateKeys:string[] = [storage_ipurl_key,storage_user_key];
+try{
+	// 尝试获取本地变量，第一次启动APP时是不存在的
+	for (let i = 0; i < saveStateKeys.length; i++) {
+		let key = saveStateKeys[i]
+		let storage_value = uni.getStorageSync(key)
+		
+		if(storage_value != ''){
+			state[key] = storage_value
+		}
+	}
+		
+}catch(e){
+	console.log('storage 数据获取失败');
+	console.log(e);
+}
+
+
+const setIpurl = (url:string)=>{
+	state.store_ipurl = url
+	uni.setStorageSync(storage_ipurl_key,url)
+}
+
+const setUser = (user:object)=>{
+	state.store_user = user
+	uni.setStorageSync(storage_user_key,user)
+}
+
+export {
+	State,
+	state,
+	setIpurl,
+	setUser,
+	
+}

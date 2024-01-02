@@ -1,0 +1,37 @@
+export type InterceptorResult = {
+	result:boolean,
+	config:Map<string, any>
+}
+// 临时的运行方法， 用来作为run和use的桥接
+let routeRun = function () { }
+/**
+ * 拦截器
+ * @desc 拦截路由跳转
+ */
+class Interceptor {
+	
+	routerConfig : Map<string,any> = new Map<string, any>()
+	result:boolean = true
+	use(fn: (config : Map<string, any>) => InterceptorResult): void {
+		routeRun = function(){
+			let {result,config} = fn(this.routerConfig)
+			this.routerConfig = config
+			this.result = result
+		}
+	}
+	
+	run(fn: (result:boolean, config : Map<string, any>) => void):void {
+		routeRun()
+		fn(this.result,this.routerConfig)
+	}
+	
+	/**
+	 * 拦截到配置
+	 * @param config 配置参数
+	 */
+	setConfig(config : Map<string, any>) : void {
+		this.routerConfig = config
+	}
+}
+
+export default Interceptor

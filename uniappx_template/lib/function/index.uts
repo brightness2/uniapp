@@ -1,0 +1,72 @@
+export enum ArrayFormat{
+	Indices='indices',
+	Brackets='brackets',
+	Repeat='repeat',
+	Comma='comma'
+}
+/**
+ * @description 对象转url参数
+ * @param {UTSJSONObject} data,对象
+ * @param {Boolean} isPrefix,是否自动加上"?"
+ * @param {ArrayFormat} arrayFormat 规则 indices|brackets|repeat|comma
+ */
+export  function queryParams(
+data:UTSJSONObject,
+isPrefix:boolean = true,
+arrayFormat:ArrayFormat=ArrayFormat.Brackets):string 
+{
+	const prefix:string = isPrefix ? '?' : ''
+	
+	const _result:string[] = []
+	
+	data.toMap().forEach((value, key,_) => {
+			if(Array.isArray(value)){
+				value as any[]
+				switch(arrayFormat.value) {
+					case ArrayFormat.Indices.value:
+						// 结果: ids[0]=1&ids[1]=2&ids[2]=3 
+						for (let i = 0; i < value.length; i++) {
+							_result.push(`${key}[${i}]=${value[i]}`)
+						}
+					break;
+					case ArrayFormat.Brackets.value:
+						// 结果: ids[]=1&ids[]=2&ids[]=3
+						value.forEach((_value:any) => {
+							_result.push(`${key}[]=${_value}`)
+						})
+					break;
+					case ArrayFormat.Repeat.value:
+						// 结果: ids=1&ids=2&ids=3
+						value.forEach((_value:any) => {
+							_result.push(`${key}=${_value}`)
+						})
+					break;
+					case ArrayFormat.Comma.value:
+							// 结果: ids=1,2,3
+							let commaStr = ''
+							value.forEach((_value:any) => {
+								commaStr += (commaStr != '' ? ',' : '') + _value
+							})
+							_result.push(`${key}=${commaStr}`)
+					break;
+					// default:
+					
+					// break;
+				}
+			}else{
+				_result.push(`${key}=${value}`)
+			}
+	})
+	return _result.length>0 ? prefix + _result.join('&') : ''
+}
+/**
+ * @description 获取当前页面路径
+ */
+export function page():string{
+	const pages = getCurrentPages()
+	// 某些特殊情况下(比如页面进行redirectTo时的一些时机)，pages可能为空数组
+	const route = pages[pages.length -1]?.route
+	return route??''
+	
+	// return `/${pages[pages.length - 1]?.route ?? ''}`
+}
