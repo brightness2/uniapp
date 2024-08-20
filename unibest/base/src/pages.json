@@ -1,0 +1,106 @@
+{
+  "globalStyle": {
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "unibest",
+    "navigationBarBackgroundColor": "#f8f8f8",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FFFFFF"
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue"
+    }
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#999999",
+    "selectedColor": "#018d71",
+    "backgroundColor": "#F8F8F8",
+    "borderStyle": "black",
+    "height": "50px",
+    "fontSize": "10px",
+    "iconWidth": "24px",
+    "spacing": "3px",
+    "list": [
+      {
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/homeHL.png",
+        "pagePath": "pages/index/404",
+        "text": "404"
+      },
+      {
+        "iconPath": "static/tabbar/example.png",
+        "selectedIconPath": "static/tabbar/exampleHL.png",
+        "pagePath": "pages/index/about",
+        "text": "关于"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "type": "home",
+      "layout": "default",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/index/404",
+      "type": "page",
+      "style": {
+        "layout": "default",
+        "navigationBarTitleText": "404"
+      }
+    },
+    {
+      "path": "pages/index/about",
+      "type": "page",
+      "style": {
+        "layout": "default",
+        "navigationBarTitleText": "关于"
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "type": "page",
+      "name": "login",
+      "auth": true,
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "pages/my/index",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "用户"
+      }
+    },
+    {
+      "path": "pages/task/index",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "任务"
+      }
+    },
+    {
+      "path": "pages/ticket/index",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "工单"
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pages-sub",
+      "pages": []
+    }
+  ]
+}
